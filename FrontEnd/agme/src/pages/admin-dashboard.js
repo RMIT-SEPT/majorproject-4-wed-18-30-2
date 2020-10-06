@@ -187,7 +187,7 @@ class AdminDashboard extends React.Component {
         <h1>ADMIN</h1>
 
         <div class="container">
-          <h1 id='title'>List of services</h1>
+          <h1 id='title'>List of myservices</h1>
           <table id='datas'>
             <tbody id="tblData">
               <tr>

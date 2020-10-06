@@ -11,7 +11,7 @@ function Header() {
                     {localStorage.getItem('auth_token') != null &&
 
                         <li className="nav-item">
-                            <a className="navbar-brand nav justify-content-center" href="/admin-dashboard">Admin Dashboard</a>
+                            <a className="navbar-brand nav justify-content-center" href="/admin-dashboard">Admin </a>
                         </li>
 
                     }
@@ -19,7 +19,7 @@ function Header() {
                     {localStorage.getItem('auth_token') != null &&
 
                         <li className="nav-item">
-                            <a className="navbar-brand nav justify-content-center" href="/worker-dashboard">Worker Dashboard</a>
+                            <a className="navbar-brand nav justify-content-center" href="/worker-dashboard">Worker </a>
                         </li>
 
                     }
@@ -27,7 +27,7 @@ function Header() {
                     {localStorage.getItem('auth_token') != null &&
 
                         <li className="nav-item">
-                            <a className="navbar-brand nav justify-content-center" href="/customer-dashboard">Customer Dashboard</a>
+                            <a className="navbar-brand nav justify-content-center" href="/customer-dashboard">Customer </a>
                         </li>
 
                     }
