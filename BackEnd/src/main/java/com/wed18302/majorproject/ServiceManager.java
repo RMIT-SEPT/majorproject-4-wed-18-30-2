@@ -130,7 +130,7 @@ public class ServiceManager {
     		bookingRepo.delete(booking);
     	}
     	
-    	serviceRepo.delete(service);
+    	serviceRepo.deleteByServiceId(service.getId());
     	
 		return new HashMap<String, Object>();
 	}

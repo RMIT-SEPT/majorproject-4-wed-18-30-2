@@ -51,7 +51,7 @@ public class Authentication {
 			
 	public boolean isMasterKey(HttpServletRequest request) {
     	String token = request.getParameter("auth-token");
-    	return token.equalsIgnoreCase(MASTER_KEY_TOKEN);
+    	return token != null && token.equalsIgnoreCase(MASTER_KEY_TOKEN);
 	}
 	
 	public User authenticate(HttpServletRequest request) {
