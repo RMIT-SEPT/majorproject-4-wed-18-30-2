@@ -21,7 +21,6 @@ class Bookings extends React.Component {
         "<td>" + service_name + "</td>" +
         "<td>" + worker_name + "</td>" +
         "<td>" + datetime + "</td>" +
-        "<td>" + del + "</td>" +
         "</tr>";
 
     };
@@ -30,7 +29,7 @@ class Bookings extends React.Component {
 
   getUserId() {
 
-    const data = encodeURI('auth-token=' + localStorage.getItem('auth_token'));    
+    const data = encodeURI('auth-token=' + localStorage.getItem('auth_token'));
 
     fetch(config.APP_URL + 'auth/getuser', {
       method: 'POST',
@@ -45,7 +44,7 @@ class Bookings extends React.Component {
         for (var k in res) {
           if (res.hasOwnProperty(k)) {
 
-            if(res[k]['id']) {
+            if (res[k]['id']) {
               localStorage.setItem('user_id', res[k]['id']);
               this.getBookings();
             }
@@ -62,7 +61,7 @@ class Bookings extends React.Component {
     const node = document.getElementById('errorMessage');
     node.innerHTML = msg;
     node.classList.remove('d-none');
-    
+
   }
 
   handleClick = (e) => {
@@ -74,7 +73,7 @@ class Bookings extends React.Component {
 
     var my_user_id = localStorage.getItem('user_id');
 
-    const data = encodeURI('customer-id=' + my_user_id);
+    const data = encodeURI('auth-token=' + localStorage.getItem('auth_token') + '&customer-id=' + my_user_id);
 
     fetch(config.APP_URL + 'booking/findByCustomer', {
       method: 'POST',
@@ -87,7 +86,7 @@ class Bookings extends React.Component {
       .then(res => {
 
         var parsedData = [];
-            
+
         for (var k of Object.values(res)) {
 
           var baddatetime = k.bookingTimestamp;
@@ -101,8 +100,7 @@ class Bookings extends React.Component {
             "id": k.id,
             "service_name": k.serviceId.name + " (" + k.serviceId.type + ")",
             "worker_name": k.serviceId.workers[0].firstName,
-            "datetime": readabledatetime,
-            'del': "<a href='#' onclick='' class='btn btn-xs btn-primary'>Delete</a>"
+            "datetime": readabledatetime
           };
 
         }
@@ -115,6 +113,24 @@ class Bookings extends React.Component {
 
   componentWillMount() {
     this.getUserId();
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    var bid = document.getElementById('booking-id').value;
+
+
+    const data = encodeURI('auth-token=' + localStorage.getItem('auth_token') + '&booking-id=' + bid);
+
+    fetch(config.APP_URL + 'booking/delete', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: data
+    })
+      .then(res => res.json())
+      .then(window.location = "bookings")
   }
 
   render() {
@@ -130,10 +146,25 @@ class Bookings extends React.Component {
               <th>Service</th>
               <th>Worker</th>
               <th>Date & Time</th>
-              <th>Delete</th>
             </tr>
           </tbody>
         </table>
+        <div>
+          <Form className="login-form" onSubmit={this.handleSubmit}>
+            <h1 className="font-weight-bold" id="heading">Delete Booking</h1>
+            <div className="alert alert-danger d-none" id="errorMessage">
+            </div>
+            <div className="alert alert-success d-none" id="successMessage"></div>
+            <FormGroup>
+              <Label>Booking ID</Label>
+              <Input type="text" id="booking-id" name="booking-id" placeholder="Booking ID" ref={node => (this.bookingid = node)}></Input>
+            </FormGroup>
+
+            <Button className="btn-lg btn-success btn-block mt-4 mb-3">
+              Delete
+            </Button>
+          </Form>
+        </div>
       </div>
 
     )

@@ -15,7 +15,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.wed18302.majorproject.BookingManager;
-import com.wed18302.majorproject.ServiceManager;
 import com.wed18302.majorproject.model.Booking;
 import com.wed18302.majorproject.model.BookingRepository;
 import com.wed18302.majorproject.model.Service;
@@ -93,7 +92,7 @@ public class BookingTest {
 		String past = ZonedDateTime.now(ZoneId.of("UTC")).minus(10, ChronoUnit.DAYS).toString();
 		String stats = null;
 		try{
-			List<Booking> bookings = bookingManager.makeBooking(service.getId(), past,customer.getId(), worker.getId());
+			bookingManager.makeBooking(service.getId(), past,customer.getId(), worker.getId());
 		}catch (JsonErrorResponse e){
 			stats = e.toString();
 			e.printStackTrace();

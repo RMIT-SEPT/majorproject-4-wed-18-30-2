@@ -13,7 +13,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.wed18302.majorproject.model.User;
 import com.wed18302.majorproject.model.UserRepository;
-import com.wed18302.majorproject.model.UserType;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest

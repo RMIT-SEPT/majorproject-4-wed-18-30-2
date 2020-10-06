@@ -31,10 +31,7 @@ class SignUp extends React.Component {
   }
 
   handleSubmit(event) {
-    const selectValue = document.getElementById("exampleSelect").value
-    console.log(selectValue);
 
-    if (selectValue === "Customer") {
       event.preventDefault();
       const data = new URLSearchParams(new FormData(event.target));
 
@@ -44,17 +41,7 @@ class SignUp extends React.Component {
       })
         .then(res => res.json())
         .then(res => this.handleResponse(res))
-    } else if (selectValue === "Admin") {
-      event.preventDefault();
-      const data = new URLSearchParams(new FormData(event.target));
 
-      fetch(config.APP_URL + 'auth/registeradmin', {
-        method: 'POST',
-        body: data
-      })
-        .then(res => res.json())
-        .then(res => this.handleResponse(res))
-    }
   }
 
   render() {
@@ -67,14 +54,6 @@ class SignUp extends React.Component {
         <div className="alert alert-danger d-none" id="errorMessage">
 
         </div>
-
-        <FormGroup>
-          <Label for="exampleSelect">Register as</Label>
-          <Input type="select" name="select" id="exampleSelect">
-            <option value="Customer">Customer</option>
-            <option value="Admin">Admin</option>
-          </Input>
-        </FormGroup>
 
         <FormGroup>
           <Label>First Name</Label>

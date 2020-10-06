@@ -1,7 +1,6 @@
 package com.wed18302.majorproject.model;
 
 import java.time.ZonedDateTime;
-import java.util.HashMap;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,6 +12,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
@@ -47,6 +47,16 @@ public class Booking {
         
     public int getId() {
     	return this.ID;
+    }
+
+    @JsonIgnore
+    public User getCustomer() {
+    	return CUSTOMER;
+    }
+    
+    @JsonIgnore
+    public Service getService() {
+    	return SERVICE;
     }
     
     public Booking() {

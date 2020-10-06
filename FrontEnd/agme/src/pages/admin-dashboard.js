@@ -3,7 +3,7 @@ import '../App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import config from '../Constants';
-import Booking from './modals/booking';
+import Booking from './modals/deleteService';
 import AddService from './modals/addService';
 
 class AdminDashboard extends React.Component {
@@ -14,9 +14,14 @@ class AdminDashboard extends React.Component {
 
   getServices() {
 
+    const data = encodeURI('auth-token=' + localStorage.getItem('auth_token'));
+
     fetch(config.APP_URL + 'service/getall', {
       method: 'POST',
-      body: ""
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: data
     })
       .then(res => res.json())
       .then(res => this.populateServices(res))
@@ -58,6 +63,7 @@ class AdminDashboard extends React.Component {
         "<td>" + id + "</td>" +
         "<td>" + type + "</td>" +
         "<td>" + name + "</td>" +
+        
         "</tr>";
 
     };
@@ -181,7 +187,7 @@ class AdminDashboard extends React.Component {
         <h1>ADMIN</h1>
 
         <div class="container">
-          <h1 id='title'>List of services</h1>
+          <h1 id='title'>List of myservices</h1>
           <table id='datas'>
             <tbody id="tblData">
               <tr>
@@ -193,15 +199,29 @@ class AdminDashboard extends React.Component {
           </table>
           <br />
           <br />
+
+          <table id="test">
+            <tr id="test">
+              <th id="test">Description</th>
+              <th id="test">Action</th>
+            </tr>
+            <tr id="test" >
+              <th id="test">Add Service</th>
+              <th id="test"><Button color="primary" href="/addservice">Add</Button></th>
+            </tr>
+            <tr>
+              <th id="test">Assign Worker</th>
+              <th id="test" ><Button color="info" href="/assignworker">Assign</Button></th>
+            </tr>
+            <tr id="test">
+              <th id="test">Delete Service</th>
+              <th id="test"><Button color="danger" href="/deleteservice">Delete</Button></th>
+            </tr>
+          </table>
+
           
-          <h1>Add Services</h1>
-          <Button href="/addservice">Add</Button>
-
-          <h1>Assign Worker</h1>
-          <Button href="/assignworker">Add</Button>
-
-
         </div>
+
       </div>
 
     )

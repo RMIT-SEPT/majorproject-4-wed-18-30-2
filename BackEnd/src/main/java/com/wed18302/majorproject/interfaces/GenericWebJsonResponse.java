@@ -8,6 +8,7 @@ import com.wed18302.majorproject.util.JsonErrorResponse;
 public interface GenericWebJsonResponse {
 
 	//public boolean hasAccessLevel(User user) throws JsonErrorResponse;
+	public boolean hasPrivilleges(User user);
 	public HashMap<String, Object> getResponse() throws JsonErrorResponse;
 	
 }

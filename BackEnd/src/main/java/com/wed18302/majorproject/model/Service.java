@@ -4,18 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
@@ -34,7 +33,8 @@ public class Service {
     private String NAME;
 
     @NotNull
-    @OneToOne(fetch = FetchType.EAGER)
+    @ManyToOne()
+    @JoinColumn(name="admin_id")    
     private User ADMIN;
 
     @ManyToMany
@@ -69,6 +69,21 @@ public class Service {
         return NAME;
     }
 
+    public boolean hasAccessLevel(User user, UserType type) {
+    	return getAccessLevel(user).getValue() >= type.getValue(); 
+    }
+    
+    public UserType getAccessLevel(User user) {
+    	if (getAdmin() == user)
+    		return UserType.Administrator;
+    	
+    	if (getWorkers().contains(user))
+    		return UserType.Worker;
+    	
+    	return UserType.Customer;
+    }
+    
+    @JsonIgnoreProperties({"workerServices", "adminServices"})
     public User getAdmin() {
         return ADMIN;
     }
@@ -77,6 +92,7 @@ public class Service {
         return TYPE;
     }
 
+    @JsonIgnoreProperties({"workerServices", "adminServices"})
     public List<User> getWorkers() {
     	return this.WORKERS;
     }
@@ -84,4 +100,5 @@ public class Service {
     public String getDescription() {
         return DESCRIPTION;
     }
+    
 }

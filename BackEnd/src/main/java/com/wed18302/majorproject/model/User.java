@@ -1,7 +1,6 @@
 package com.wed18302.majorproject.model;
 
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -9,16 +8,14 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "users")
@@ -37,8 +34,11 @@ public class User {
     @NotNull(message = "Last name is mandatory")
     private String LASTNAME;
 
+    @OneToMany(mappedBy="ADMIN",cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Service> ADMINSERVICES;
+    
     @ManyToMany(mappedBy = "WORKERS")
-    private List<Service> SERVICES;
+    private List<Service> WORKERSERVICES;
     
     public User() {
     }
@@ -73,9 +73,14 @@ public class User {
     	return this.LASTNAME;
     }
 
-    @JsonIgnore
+    @JsonIgnoreProperties("workers")
     public List<Service> getWorkerServices() {
-    	return this.SERVICES;
+    	return this.WORKERSERVICES;
+    }
+
+    @JsonIgnoreProperties("admin")
+    public List<Service> getAdminServices() {
+    	return this.ADMINSERVICES;
     }
             
     @Override

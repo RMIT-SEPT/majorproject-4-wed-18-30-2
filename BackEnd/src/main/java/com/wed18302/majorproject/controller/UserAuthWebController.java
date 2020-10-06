@@ -59,7 +59,7 @@ public class UserAuthWebController {
     @ResponseBody 
 	// /auth/getuser?token={token}
 	public ResponseEntity<Object> getUserInfo(@RequestParam("auth-token") String token) throws JsonErrorResponse {
-    	return WebResponseUtil.genericWebResponse(new GenericWebJsonResponse() {
+    	return WebResponseUtil.genericWebResponse(null, null, new GenericWebJsonResponse() {
 
 			@Override
 			public HashMap<String, Object> getResponse() throws JsonErrorResponse {
@@ -77,6 +77,11 @@ public class UserAuthWebController {
 		        HashMap<String, Object> hmap = new HashMap<String, Object>();
 		        hmap.put(Integer.toString(user.getId()), user);
 		        return hmap;
+			}
+
+			@Override
+			public boolean hasPrivilleges(User user) { // changing this will do nothing, auth is null
+				return true;
 			}
 		});
 	}

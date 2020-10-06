@@ -4,7 +4,7 @@ import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import config from '../../Constants';
 
-class AssignWorker extends React.Component {
+class DeleteService extends React.Component {
 
     constructor() {
         super();
@@ -124,11 +124,10 @@ class AssignWorker extends React.Component {
 
         event.preventDefault();
 
-        var uid = document.getElementById('user-id').value;
 
-        const data = encodeURI('auth-token=' + localStorage.getItem('auth_token') + '&service-id=' + window.selectedService.id + '&user-id=' + uid);
+        const data = encodeURI('auth-token=' + localStorage.getItem('auth_token') + '&service-id=' + window.selectedService.id);
 
-        fetch(config.APP_URL + 'service/assignworker', {
+        fetch(config.APP_URL + 'service/delete', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
@@ -146,8 +145,10 @@ class AssignWorker extends React.Component {
 
         return (
 
+
+
             <Form className="login-form" onSubmit={this.handleSubmit}>
-                <h1 className="font-weight-bold" id="heading">Assign Worker</h1>
+                <h1 className="font-weight-bold" id="heading">Delete Service</h1>
                 <div className="alert alert-danger d-none" id="errorMessage">
                 </div>
                 <div className="alert alert-success d-none" id="successMessage"></div>
@@ -157,15 +158,9 @@ class AssignWorker extends React.Component {
                         <option value=""></option>
                     </Input>
                 </FormGroup>
-
-                <FormGroup>
-                    <Label>User ID</Label>
-                    <Input type="text" id="user-id" name="user-id" placeholder="User ID" ref={node => (this.userid = node)}></Input>
-                </FormGroup>
-
-                <Button className="btn-lg btn-success btn-block mt-5 mb-3" type="submit">
-                    Assign
-                </Button>
+                <Button color="danger" className="btn-lg btn-success btn-block mt-5 mb-3" type="submit">
+                    Delete
+                        </Button>
             </Form>
         );
 
@@ -173,4 +168,4 @@ class AssignWorker extends React.Component {
 
 }
 
-export default AssignWorker;
+export default DeleteService;

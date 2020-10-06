@@ -3,7 +3,6 @@ package com.wed18302.majorproject.tests;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.List;
-import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -14,10 +13,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.wed18302.majorproject.BookingManager;
 import com.wed18302.majorproject.ServiceManager;
-import com.wed18302.majorproject.model.Booking;
-import com.wed18302.majorproject.model.BookingRepository;
 import com.wed18302.majorproject.model.Service;
 import com.wed18302.majorproject.model.ServiceRepository;
 import com.wed18302.majorproject.model.User;
@@ -36,9 +32,6 @@ public class ServiceTest {
     private ServiceManager serviceManager;
 
     @Autowired
-    private BookingRepository bookingRepository;
-
-    @Autowired
     private UserRepository userRepository;
 
     String time_str =ZonedDateTime.now(ZoneId.of("UTC")).toString();
@@ -52,7 +45,6 @@ public class ServiceTest {
 
     @Test
     public void services_NewService(){
-        String status ="pass";
         userInitialize();
         try{
             List<Service> services = serviceManager.makeService(userRepository.findByEMAIL("admin.1@test.com").getId(),"type1","service1","stuff");
@@ -61,7 +53,6 @@ public class ServiceTest {
 
 
         }catch (JsonErrorResponse e){
-            status = e.toString();
             e.printStackTrace();
         }
     }

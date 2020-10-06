@@ -13,6 +13,7 @@ import AddService from './pages/modals/addService';
 import Bookings from './pages/bookings';
 import AdminDashboard from './pages/admin-dashboard';
 import AssignWorker from './pages/modals/assignWorker';
+import DeleteService from './pages/modals/deleteService';
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
             <Route path="/logout" component={Logout} />
             <Route path="/admin-dashboard" component={AdminDashboard} />
             <Route path="/assignworker" component={AssignWorker} />
+            <Route path="/deleteservice" component={DeleteService} />
             <Route component={NotFoundPage} />
           </Switch>
 
