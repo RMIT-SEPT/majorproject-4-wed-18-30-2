@@ -162,7 +162,7 @@ class Bookings extends React.Component {
 
             <Button className="btn-lg btn-success btn-block mt-4 mb-3">
               Delete
-              </Button>
+            </Button>
           </Form>
         </div>
       </div>

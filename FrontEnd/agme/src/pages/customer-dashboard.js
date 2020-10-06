@@ -3,7 +3,7 @@ import '../App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import config from '../Constants';
-import Booking from './modals/booking';
+import Booking from './modals/deleteService';
 import AddService from './modals/addService';
 
 class Dashboard extends React.Component {
@@ -53,7 +53,7 @@ class Dashboard extends React.Component {
 
     for (var k of Object.values(window.datas)) {
 
-      const { id, type, name } = k
+      const { id, type, name, } = k
 
       if (window.selectedService == null) {
         window.selectedService = id;
