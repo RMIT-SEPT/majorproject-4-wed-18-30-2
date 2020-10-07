@@ -89,6 +89,24 @@ public class BookingController {
 		});
     }
     
+    @RequestMapping(value="/booking/findByAdmin", method = RequestMethod.POST)  
+    @ResponseBody  
+    public ResponseEntity<Object> booking_FindByAdmin(HttpServletRequest request, 
+    		@RequestParam("admin-id") int adminId ) {
+    	return WebResponseUtil.genericWebResponse(request, auth, new GenericWebJsonResponse() {
+
+			@Override
+			public HashMap<String, Object> getResponse() throws JsonErrorResponse {
+				return serializeToJson(bookingManager.findForAdmin(adminId));
+			}
+
+			@Override
+			public boolean hasPrivilleges(User user) {
+				return true;
+			}
+		});
+    }
+    
     @RequestMapping(value="/booking/findById", method = RequestMethod.POST)  
     @ResponseBody  
     public ResponseEntity<Object> booking_FindById(HttpServletRequest request, 

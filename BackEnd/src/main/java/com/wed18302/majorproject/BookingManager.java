@@ -81,6 +81,16 @@ public class BookingManager {
     	
         return bookingRepo.findByWORKER(workerUser);
 	}
+
+	public List<Booking> findForAdmin(int adminId) throws JsonErrorResponse {
+    	User adminUser = userRepo.findByID(adminId);
+    	
+    	if (adminUser == null)
+    		throw new JsonErrorResponse("Invalid admin id was specified.");
+    	
+        return bookingRepo.findByADMIN(adminUser);
+	}
+	
 	
 	public List<Booking> delete(int bookingId) throws JsonErrorResponse {
 
