@@ -70,6 +70,24 @@ public class BookingController {
 			}
 		});
     }
+
+    @RequestMapping(value="/booking/findByWorker", method = RequestMethod.POST)  
+    @ResponseBody  
+    public ResponseEntity<Object> booking_FindByWorker(HttpServletRequest request, 
+    		@RequestParam("worker-id") int workerId ) {
+    	return WebResponseUtil.genericWebResponse(request, auth, new GenericWebJsonResponse() {
+
+			@Override
+			public HashMap<String, Object> getResponse() throws JsonErrorResponse {
+				return serializeToJson(bookingManager.findForWorker(workerId));
+			}
+
+			@Override
+			public boolean hasPrivilleges(User user) {
+				return true;
+			}
+		});
+    }
     
     @RequestMapping(value="/booking/findById", method = RequestMethod.POST)  
     @ResponseBody  
