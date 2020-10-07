@@ -72,6 +72,15 @@ public class BookingManager {
     	
         return bookingRepo.findByCUSTOMER(customerUser);
 	}
+
+	public List<Booking> findForWorker(int workerId) throws JsonErrorResponse {
+    	User workerUser = userRepo.findByID(workerId);
+    	
+    	if (workerUser == null)
+    		throw new JsonErrorResponse("Invalid worker id was specified.");
+    	
+        return bookingRepo.findByWORKER(workerUser);
+	}
 	
 	public List<Booking> delete(int bookingId) throws JsonErrorResponse {
 
