@@ -42,7 +42,7 @@ class DeleteService extends React.Component {
 
         const data = encodeURI('auth-token=' + localStorage.getItem('auth_token'));
 
-        fetch(config.APP_URL + 'service/getall', {
+        fetch(config.APP_URL + 'auth/getuser', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
@@ -60,7 +60,7 @@ class DeleteService extends React.Component {
         var index;
         var len;
 
-        for (var k of Object.values(res)) {
+        for (var k of Object.values(res[localStorage.getItem('user_id')].adminServices)) {
             parsedData[k.id] = {
                 "id": k.id,
                 "name": k.name,
