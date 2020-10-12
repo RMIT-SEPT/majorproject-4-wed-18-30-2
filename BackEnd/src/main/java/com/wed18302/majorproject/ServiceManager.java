@@ -83,6 +83,19 @@ public class ServiceManager {
     	
     	return getServiceMap(service);
 	}
+
+	public HashMap<String, Object> findServicesByUser(int adminId)  throws JsonErrorResponse {
+
+    	User adminUser = userRepo.findByID(adminId);
+    	
+    	if (adminUser == null)
+    		throw new JsonErrorResponse("Invalid user was specified.");
+    	
+        HashMap<String, Object> hmap = new HashMap<String, Object>();
+        for (Service service : serviceRepo.findByAdmin(adminUser))
+        	hmap.put(Integer.toString(service.getId()), service);
+		return hmap;
+	}
 	
 	public boolean hasPermission(int serviceId, User user, UserType type) {
 		Service service = serviceRepo.findByID(serviceId);

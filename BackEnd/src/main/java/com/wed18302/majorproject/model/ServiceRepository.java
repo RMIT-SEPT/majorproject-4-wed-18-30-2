@@ -16,7 +16,7 @@ public interface ServiceRepository extends JpaRepository<Service, Long> {
     @Query("SELECT service FROM Service service WHERE service.NAME=(:pName)")
     Service findByName(@Param("pName") String name);
     @Query("SELECT service FROM Service service WHERE service.ADMIN=(:pUser)")
-    List<Service> findByBusiness(@Param("pUser") User admin);
+    List<Service> findByAdmin(@Param("pUser") User admin);
     @Query("SELECT service FROM Service service WHERE service.TYPE=(:pType)")
     List<Service> findByType(@Param("pType") String type);
     

@@ -133,6 +133,25 @@ public class ServiceController {
 			}
 		});
 	}
+
+    
+    @RequestMapping(value="/service/findbyadmin", method = RequestMethod.POST)  
+    @ResponseBody  
+	public ResponseEntity<Object> findByAdmin(HttpServletRequest request, 
+			@RequestParam("admin-id") int adminId) throws JsonErrorResponse {
+    	return WebResponseUtil.genericWebResponse(request, auth, new GenericWebJsonResponse() {
+
+			@Override
+			public HashMap<String, Object> getResponse() throws JsonErrorResponse {
+				return serviceManager.findServicesByUser(adminId);
+			}
+
+			@Override
+			public boolean hasPrivilleges(User user) {
+				return true;
+			}
+		});
+	}
     
     @RequestMapping(value="/service/getall", method = RequestMethod.POST)  
     @ResponseBody  
