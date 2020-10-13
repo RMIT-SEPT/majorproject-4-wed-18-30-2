@@ -28,7 +28,7 @@ import com.wed18302.majorproject.util.JsonErrorResponse;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @ActiveProfiles("test")
-public class BookingTest {
+public class BookingTest2 {
     
     @Autowired
     private BookingManager bookingManager;
@@ -42,21 +42,29 @@ public class BookingTest {
     @Autowired
     private UserRepository userRepository;
 
+
+	User customer,worker,admin;
+	Service service;
+    public void initialize(){
+		customer = new User("test.customer@test.com", "password", 0, "Paul", "Smith");
+		worker = new User("test.worker@test.com", "password", 0, "Paua", "Smith");
+		admin = new User("test.admin@test.com", "password", 0, "Pauz", "Smith");
+		service = new Service(ZonedDateTime.now(ZoneId.of("UTC")).toString(), admin, "Building", "Test Business", "A test description.");
+		userRepository.save(customer);
+		userRepository.save(worker);
+		userRepository.save(admin);
+		serviceRepo.save(service);
+	}
+   
     @Test
     public void booking_testNewBooking() {
 
     	// save new test account to the database
-    	var customer = new User("test.customer@test.com", "password", 0, "Paul", "Smith");
-    	var worker = new User("test.worker@test.com", "password", 0, "Paul", "Smith");
-    	var admin = new User("test.admin@test.com", "password", 0, "Paul", "Smith");
-    	userRepository.save(customer);
-    	userRepository.save(worker);
-    	userRepository.save(admin);
+    	initialize();
 
-		String now = ZonedDateTime.now(ZoneId.of("UTC")).toString();
-    	var service = new Service(now.toString(), admin, "Building", "Test Business", "A test description.");
-    	service.getWorkers().add(worker);
-    	serviceRepo.save(service);
+//		String now = ZonedDateTime.now(ZoneId.of("UTC")).toString();
+		service.getWorkers().add(worker);
+		serviceRepo.save(service);
     	String future = ZonedDateTime.now(ZoneId.of("UTC")).plus(10,ChronoUnit.DAYS).toString();
     	try {        	
 			List<Booking> bookings = bookingManager.makeBooking(service.getId(), future,
@@ -80,25 +88,42 @@ public class BookingTest {
     }
     @Test//Will fail
 	public void booking_illegal_bookingTime(){
-		var customer = new User("test.customer@test.com", "password", 0, "Paul", "Smith");
-		var worker = new User("test.worker@test.com", "password", 0, "Paul", "Smith");
-		var admin = new User("test.admin@test.com", "password", 0, "Paul", "Smith");
-		userRepository.save(customer);
-		userRepository.save(worker);
-		userRepository.save(admin);
+		initialize();
 		var service = new Service(ZonedDateTime.now(ZoneId.of("UTC")).toString(), admin, "Building", "Test Business", "A test description.");
 		service.getWorkers().add(worker);
 		serviceRepo.save(service);
 		String past = ZonedDateTime.now(ZoneId.of("UTC")).minus(10, ChronoUnit.DAYS).toString();
 		String stats = null;
 		try{
-			bookingManager.makeBooking(service.getId(), past,customer.getId(), worker.getId());
+			List<Booking> bookings = bookingManager.makeBooking(service.getId(), past,customer.getId(), worker.getId());
 		}catch (JsonErrorResponse e){
 			stats = e.toString();
 			e.printStackTrace();
 		}
 		Assert.assertNotNull(stats);
 	}
+	@Test//Will fail
+	public void booking_multiple_services_at_same_time(){
+		initialize();
+		String ex ="";
+		service.getWorkers().add(worker);
+		serviceRepo.save(service);
+		try{
+			List<Booking> bookings = bookingManager.makeBooking(service.getId(),ZonedDateTime.now(ZoneId.of("UTC")).plusDays(6).toString(),
+					customer.getId(), worker.getId());
+			bookingRepo.save(bookings.get(0));
+			System.out.println(bookings.get(0).getId());
+			bookings = bookingManager.makeBooking(service.getId(),ZonedDateTime.now(ZoneId.of("UTC")).plusDays(6).toString(),
+					customer.getId(), worker.getId());
+			System.out.println(bookings.get(0).getId());
+			bookingRepo.save(bookings.get(0));
 
-    
+		}catch (JsonErrorResponse e){
+			ex="conflict";
+			e.printStackTrace();
+		}
+		Assert.assertTrue(ex.contains("conflict"));
+	}
+	
+
 }

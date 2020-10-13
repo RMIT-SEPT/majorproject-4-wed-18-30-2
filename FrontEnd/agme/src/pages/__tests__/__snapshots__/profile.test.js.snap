@@ -1,0 +1,136 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div>
+  <form
+    className="signup-form"
+  >
+    <h1
+      class="font-weight-bold"
+      id="heading"
+    >
+      Profile
+    </h1>
+    <div
+      className="row"
+    >
+      <div
+        className="col-6"
+      >
+        <div
+          className="form-group"
+        >
+          <label
+            className=""
+          >
+            First Name
+          </label>
+          <input
+            className="form-control"
+            placeholder="First Name"
+            type="text"
+            value="Sample"
+          />
+        </div>
+      </div>
+      <div
+        className="col-6"
+      >
+        <div
+          className="form-group"
+        >
+          <label
+            className=""
+          >
+            Last Name
+          </label>
+          <input
+            className="form-control"
+            placeholder="Last Name"
+            type="text"
+            value="Sample"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      className="form-group"
+    >
+      <label
+        className=""
+      >
+        Contact Number
+      </label>
+      <input
+        className="form-control"
+        placeholder="Contact Number"
+        type="text"
+        value="Sample"
+      />
+    </div>
+    <div
+      className="form-group"
+    >
+      <label
+        className=""
+      >
+        Address
+      </label>
+      <input
+        className="form-control"
+        placeholder="Address"
+        type="text"
+        value="Sample"
+      />
+    </div>
+    <button
+      aria-label={null}
+      className="btn-lg btn-success btn-block mt-5 mb-3 btn btn-secondary"
+      onClick={[Function]}
+    >
+      Save Changes
+    </button>
+  </form>
+  <form
+    className="signup-form"
+  >
+    <div
+      className="form-group"
+    >
+      <label
+        className=""
+      >
+        Current Password
+      </label>
+      <input
+        className="form-control"
+        placeholder="*******"
+        type="password"
+        value=""
+      />
+    </div>
+    <div
+      className="form-group"
+    >
+      <label
+        className=""
+      >
+        New Password
+      </label>
+      <input
+        className="form-control"
+        placeholder="*******"
+        type="password"
+        value=""
+      />
+    </div>
+    <button
+      aria-label={null}
+      className="btn-lg btn-success btn-block mt-5 mb-3 btn btn-secondary"
+      onClick={[Function]}
+    >
+      Change Password
+    </button>
+  </form>
+</div>
+`;

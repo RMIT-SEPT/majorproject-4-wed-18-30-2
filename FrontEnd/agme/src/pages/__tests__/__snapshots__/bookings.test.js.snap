@@ -1,0 +1,79 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div
+  class="container"
+>
+  <h1
+    id="title"
+  >
+    List of Bookings
+  </h1>
+  <table
+    id="datas"
+  >
+    <tbody
+      id="tblData"
+    >
+      <tr>
+        <th>
+          ID
+        </th>
+        <th>
+          Service
+        </th>
+        <th>
+          Worker
+        </th>
+        <th>
+          Date & Time
+        </th>
+      </tr>
+    </tbody>
+  </table>
+  <div>
+    <form
+      className="login-form"
+      onSubmit={[Function]}
+    >
+      <h1
+        className="font-weight-bold"
+        id="heading"
+      >
+        Delete Booking
+      </h1>
+      <div
+        className="alert alert-danger d-none"
+        id="errorMessage"
+      />
+      <div
+        className="alert alert-success d-none"
+        id="successMessage"
+      />
+      <div
+        className="form-group"
+      >
+        <label
+          className=""
+        >
+          Booking ID
+        </label>
+        <input
+          className="form-control"
+          id="booking-id"
+          name="booking-id"
+          placeholder="Booking ID"
+          type="text"
+        />
+      </div>
+      <button
+        aria-label={null}
+        className="btn-lg btn-success btn-block mt-4 mb-3 btn btn-secondary"
+        onClick={[Function]}
+      >
+        Delete
+      </button>
+    </form>
+  </div>
+</div>
+`;
