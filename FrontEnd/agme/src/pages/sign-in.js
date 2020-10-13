@@ -25,8 +25,44 @@ class SignIn extends React.Component {
       this.showErrorModal(resp.error);
     } else if (typeof resp['auth-token'] != "undefined") {
       localStorage.setItem('auth_token', resp['auth-token']);
-      window.location = 'customer-dashboard';
+      this.redirectUser();
     }
+
+  }
+
+  redirectUser() {
+
+    const data = encodeURI('auth-token=' + localStorage.getItem('auth_token'));
+
+    fetch(config.APP_URL + 'auth/getuser', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: data
+    })
+      .then(res => res.json())
+      .then(res => {
+
+        for (var k in res) {
+          if (res.hasOwnProperty(k)) {
+
+            if (res[k]['id']) {
+              localStorage.setItem('user_id', res[k]['id']);
+            }
+
+          }
+        }
+
+        if(res[localStorage.getItem('user_id')].adminServices.length > 0) {
+          window.location = 'admin-dashboard';
+        } else if(res[localStorage.getItem('user_id')].workerServices.length > 0) {
+          window.location = 'worker-dashboard';
+        } else {
+          window.location = 'customer-dashboard';
+        }
+
+      });
 
   }
 
